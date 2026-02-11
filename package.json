@@ -1,0 +1,27 @@
+{
+  "name": "universal_notification_support_lib",
+  "version": "1.0.0",
+  "description": "Utility for universal-notifier",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/msshahanshah/universal_notification_support_lib.git"
+  },
+  "keywords": [],
+  "author": "Dikshant Sharma",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/msshahanshah/universal_notification_support_lib"
+  },
+  "homepage": "hhttps://github.com/msshahanshah/universal_notification_support_lib#readme",
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.972.0",
+    "amqplib": "^0.10.9",
+    "dotenv": "^17.2.3",
+    "lru-cache": "^11.2.4"
+  }
+}
