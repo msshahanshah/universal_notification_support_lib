@@ -110,15 +110,7 @@ class SecretManager {
           );
 
           const parsed = JSON.parse(SecretString);
-          this.logger.info(
-            `[SecretManager] parsing secret ${JSON.stringify(parsed)}`,
-          );
-
           const result = JSON.parse(parsed[env]);
-          this.logger.info(
-            `[SecretManager] SecretString is: ${JSON.stringify(result)}`,
-          );
-
           return result;
         }),
       );
