@@ -104,9 +104,22 @@ class SecretManager {
             return null;
           }
 
-          this.logger.info(`[SecretManager] SecretString is: ${SecretString}`);
+          const env = environment.trim();
+          this.logger.info(
+            `[SecretManager] env ${environment} length before trim: ${environment.length} after ${env.length}`,
+          );
+
           const parsed = JSON.parse(SecretString);
-          return JSON.parse(parsed[environment]);
+          this.logger.info(
+            `[SecretManager] parsing secret ${JSON.stringify(parsed)}`,
+          );
+
+          const result = JSON.parse(parsed[env]);
+          this.logger.info(
+            `[SecretManager] SecretString is: ${JSON.stringify(result)}`,
+          );
+
+          return result;
         }),
       );
 
