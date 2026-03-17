@@ -172,7 +172,7 @@ class SecretManager {
 }
 
 module.exports = {
-  SecretManager,
-  RabbitMQClient,
-  RabbitMQManager,
+  SecretManager: new SecretManager(),
+  RabbitMQClient: RabbitMQClient,
+  RabbitMQManager: RabbitMQManager,
 };
