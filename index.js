@@ -104,6 +104,7 @@ class SecretManager {
             return null;
           }
 
+          this.logger.info(`[SecretManager] SecretString is: ${SecretString}`);
           const parsed = JSON.parse(SecretString);
           return JSON.parse(parsed[environment]);
         }),
