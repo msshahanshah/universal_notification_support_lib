@@ -21,7 +21,9 @@ class RabbitMQClient {
     this.logger.info("[RabbitMQClient] Connecting to RabbitMQ...");
     this.connection = await amqp.connect(this.url);
     this.channel = await this.connection.createConfirmChannel();
-    this.logger.info("[RabbitMQClient] Connection and confirm channel established");
+    this.logger.info(
+      "[RabbitMQClient] Connection and confirm channel established",
+    );
 
     this.connection.on("error", (err) => {
       this.logger.error("[RabbitMQClient] Connection error", err);
@@ -154,7 +156,9 @@ class RabbitMQClient {
 
   async processMessage({ service, msg, sender }, db, maxProcessAttemptCount) {
     if (!msg) {
-      this.logger.debug("[RabbitMQClient] processMessage received null msg, skipping");
+      this.logger.debug(
+        "[RabbitMQClient] processMessage received null msg, skipping",
+      );
       return;
     }
 
@@ -170,7 +174,10 @@ class RabbitMQClient {
         `[RabbitMQClient] Parsed payload for messageId=${payload?.messageId}`,
       );
     } catch (err) {
-      this.logger.error("[RabbitMQClient] Invalid JSON payload, dropping message", err);
+      this.logger.error(
+        "[RabbitMQClient] Invalid JSON payload, dropping message",
+        err,
+      );
       return this.channel.nack(msg, false, false);
     }
 
@@ -253,7 +260,11 @@ class RabbitMQClient {
           `[RabbitMQClient] Updating DB status to "sent" for messageId=${messageId}`,
         );
         await db.Notification.update(
-          { status: "sent", connectorResponse: JSON.stringify(result) },
+          {
+            status: "sent",
+            connectorResponse: JSON.stringify(result),
+            referenceId: result?.referenceId,
+          },
           { where: { messageId } },
         );
       }
