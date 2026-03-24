@@ -261,7 +261,7 @@ class RabbitMQClient {
         );
         await db.Notification.update(
           {
-            status: "sent",
+            status: result.status ? `${provider}:${result.status}` : "sent",
             connectorResponse: JSON.stringify(result),
             referenceId: result?.referenceId,
           },
