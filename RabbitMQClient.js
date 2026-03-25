@@ -271,7 +271,7 @@ class RabbitMQClient {
 
       // Push message to webhook queue if allowed
       if (service?.toUpperCase() !== "WEBHOOK" && content.isWebhookEnabled) {
-        const clientId = content?.client;
+        const clientId = content?.clientId;
         if (!clientId) {
           throw new Error(
             `failed to publish message to webhook queue due to missing clientId`,
@@ -338,7 +338,7 @@ class RabbitMQClient {
 
       // Push message to webhook queue if allowed
       if (service?.toUpperCase() !== "WEBHOOK" && content.isWebhookEnabled) {
-        const clientId = content?.client;
+        const clientId = content?.clientId;
         if (!clientId) {
           throw new Error(
             `failed to publish message to webhook queue due to missing clientId`,
