@@ -284,15 +284,15 @@ class RabbitMQClient {
             status: "failed",
             details: {
               messageId,
-              connectorResponse: JSON.stringify(err),
+              connectorResponse: JSON.stringify(result),
             },
           })
             .then(() => {
               this.logger.info(`message published to webhook queue`);
             })
-            .catch((err) => {
+            .catch((error) => {
               this.logger.error(
-                `failed to publish message to webhook queue. Error: ${JSON.stringify(err)}`,
+                `failed to publish message to webhook queue. Error: ${JSON.stringify(error)}`,
               );
             });
         }
@@ -361,7 +361,7 @@ class RabbitMQClient {
             })
             .catch((err) => {
               this.logger.error(
-                `failed to publish message to webhook queue. Error: ${JSON.stringify(err)}`,
+                `failed to publish message to webhook queue. Error: ${JSON.stringify(error)}`,
               );
             });
         }
