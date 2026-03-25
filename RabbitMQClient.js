@@ -272,28 +272,30 @@ class RabbitMQClient {
       // Push message to webhook queue if allowed
       if (service?.toUpperCase() !== "WEBHOOK" && content.isWebhookEnabled) {
         const clientId = content?.clientId;
+
         if (!clientId) {
-          throw new Error(
-            `failed to publish message to webhook queue due to missing clientId`,
+          this.logger.warn(
+            `Skipping webhook publish: missing clientId for messageId=${messageId}`,
           );
-        }
-        this.publishMessage("webhook", {
-          clientId,
-          service,
-          status: "sent",
-          details: {
-            messageId,
-            connectorResponse: result,
-          },
-        })
-          .then(() => {
-            this.logger.info(`message published to webhook queue`);
+        } else {
+          this.publishMessage("webhook", {
+            clientId,
+            service,
+            status: "failed",
+            details: {
+              messageId,
+              connectorResponse: JSON.stringify(err),
+            },
           })
-          .catch((err) => {
-            this.logger.error(
-              `failed to publish message to webhook queue. Error: ${JSON.stringify(err)}`,
-            );
-          });
+            .then(() => {
+              this.logger.info(`message published to webhook queue`);
+            })
+            .catch((err) => {
+              this.logger.error(
+                `failed to publish message to webhook queue. Error: ${JSON.stringify(err)}`,
+              );
+            });
+        }
       }
 
       return this.channel.ack(msg);
@@ -339,29 +341,32 @@ class RabbitMQClient {
       // Push message to webhook queue if allowed
       if (service?.toUpperCase() !== "WEBHOOK" && content.isWebhookEnabled) {
         const clientId = content?.clientId;
+
         if (!clientId) {
-          throw new Error(
-            `failed to publish message to webhook queue due to missing clientId`,
+          this.logger.warn(
+            `Skipping webhook publish: missing clientId for messageId=${messageId}`,
           );
-        }
-        this.publishMessage("webhook", {
-          clientId,
-          service,
-          status: "failed",
-          details: {
-            messageId,
-            connectorResponse: JSON.stringify(err),
-          },
-        })
-          .then(() => {
-            this.logger.info(`message published to webhook queue`);
+        } else {
+          this.publishMessage("webhook", {
+            clientId,
+            service,
+            status: "failed",
+            details: {
+              messageId,
+              connectorResponse: JSON.stringify(err),
+            },
           })
-          .catch((err) => {
-            this.logger.error(
-              `failed to publish message to webhook queue. Error: ${JSON.stringify(err)}`,
-            );
-          });
+            .then(() => {
+              this.logger.info(`message published to webhook queue`);
+            })
+            .catch((err) => {
+              this.logger.error(
+                `failed to publish message to webhook queue. Error: ${JSON.stringify(err)}`,
+              );
+            });
+        }
       }
+
       return this.channel.nack(msg, false, true);
     }
   }
