@@ -281,7 +281,7 @@ class RabbitMQClient {
           this.publishMessage("webhook", {
             clientId,
             service,
-            status: "failed",
+            status: result.status ? `${provider}:${result.status}` : "sent",
             details: {
               messageId,
               connectorResponse: JSON.stringify(result),
